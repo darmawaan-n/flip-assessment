@@ -1,6 +1,9 @@
 services:
   db:
+    container_name: pokemon_db
     image: postgres:15
+    networks:
+      - pokemon_net
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
@@ -14,11 +17,19 @@ services:
       - "5432:5432"
 
   web:
+    container_name: pokemon_api
     build: .
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - pokemon_net
     environment:
       DATABASE_URL: postgresql://user:pass@db:5432/pokemon_db
+
+networks:
+  pokemon_net:
+    name: pokemon_network
+    driver: bridge
