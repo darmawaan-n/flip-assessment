@@ -7,7 +7,7 @@ class PokemonEffect(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     raw_id = Column(String(13), index=True)
-    user_id = Column(String(7), index=True)
+    user_id = Column(Integer, index=True)
     pokemon_ability_id = Column(Integer)
     effect = Column(String)
     language = Column(JSON)
